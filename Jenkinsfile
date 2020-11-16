@@ -9,7 +9,7 @@ pipeline {
 	stage('Build') {
 		steps {
 			withSonarQubeEnv('sonar') {
-				sh '/opt/maven/bin/mvn clean verify sonar:sonar -Dmaven.test.skip=true'
+				shell '/opt/maven/bin/mvn clean verify sonar:sonar -Dmaven.test.skip=true'
 			}
 		}
 	}
@@ -22,17 +22,17 @@ pipeline {
           }
 	stage ('Deploy') {
 		steps {
-			sh '/opt/maven/bin/mvn clean deploy -Dmaven.test.skip=true'
+			shell '/opt/maven/bin/mvn clean deploy -Dmaven.test.skip=true'
 		}
 	}
 	stage ('Release') {
 		steps {
-			sh 'export JENKINS_NODE_COOKIE=dontkillme ;nohup java -jar $WORKSPACE/target/*.jar &'
+			shell 'export JENKINS_NODE_COOKIE=dontkillme ;nohup java -jar $WORKSPACE/target/*.jar &'
 		}
 	}
 	stage ('DB Migration') {
 		steps {
-			sh '/opt/maven/bin/mvn clean flyway:migrate'
+			shell '/opt/maven/bin/mvn clean flyway:migrate'
 		}
 	}
 }
