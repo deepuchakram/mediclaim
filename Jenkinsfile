@@ -10,10 +10,10 @@ pipeline {
 		steps {
 			withSonarQubeEnv('sonar') {
 				shell '/opt/maven/bin/mvn clean verify sonar:sonar -Dmaven.test.skip=true'
-				shell '/opt/maven/bin/mvn sonar:sonar \
-  -Dsonar.projectKey=Mediclaim \
-  -Dsonar.host.url=http://13.127.94.162:9000 \
-  -Dsonar.login=87439949d31ee61f4b8074dd1a7b0b2b3f073fd3'
+				//shell '/opt/maven/bin/mvn sonar:sonar \
+ // -Dsonar.projectKey=Mediclaim \
+ // -Dsonar.host.url=http://13.127.94.162:9000 \
+ // -Dsonar.login=87439949d31ee61f4b8074dd1a7b0b2b3f073fd3'
 			}
 		}
 	}
