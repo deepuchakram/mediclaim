@@ -24,12 +24,14 @@ pipeline {
   -Dsonar.projectKey=Mediclaim \
   -Dsonar.host.url=http://13.233.158.46:9000 \
   -Dsonar.login=claim1
-		    }
+		    
              timeout(time: 2, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
               }
             }
           }
+		
+	}
 	stage ('Deploy') {
 		steps {
 			shell '/opt/maven/bin/mvn clean deploy -Dmaven.test.skip=true'
