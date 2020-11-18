@@ -20,10 +20,10 @@ pipeline {
 	stage("Quality Gate") {
             steps {
 		    withSonarQubeEnv('sonar') {
-			    shell /opt/maven/bin/mvn sonar:sonar \
+			    shell '/opt/maven/bin/mvn sonar:sonar \
   -Dsonar.projectKey=Mediclaim \
   -Dsonar.host.url=http://13.233.158.46:9000 \
-  -Dsonar.login=claim1
+  -Dsonar.login=claim1'
 		    
              timeout(time: 2, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
