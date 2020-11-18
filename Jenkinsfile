@@ -6,13 +6,7 @@ pipeline {
             git 'https://github.com/deepuchakram/mediclaim.git'
 		}
 	}
-		stage('maven compile'){
-        // def mvnHome = tool name: 'Maven', type: 'maven'
-        // def mvnCli = "${mvnHome}/bin/mvn"
-	    steps{
-        shell 'mvn clean compile'
-	    }
-    }
+		
 	stage('Build') {
 		steps {
 			//withSonarQubeEnv('sonar') {
