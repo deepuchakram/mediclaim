@@ -13,6 +13,27 @@ pipeline {
             }
         }
     }
+       stage('Build Approval')
+        {
+        steps{
+         slackSend baseUrl: 'https://hooks.slack.com/services/', channel: 'pipeline', color: 'bad', message: "${env.BUILD_URL}", tokenCredentialId: 'slackpipe', username: 'admin'
+         script{
+           def userInput
+           try {
+             userInput = input(id: 'userInput', message: 'Build Approval', 
+			 submitterParameter: 'submitter',
+			 submitter:'buildapprover', 
+			 parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: 'Build Approval', name: 'env']])
+             } catch(err) { 
+             def user = err.getCauses()[0].getUser()
+             userInput = false
+             echo "Aborted by: [${user}]"
+            }
+         }
+		 
+        }
+        }
+       
     // seems some issue with quality gates in latest jenkins version so commented out
     /*stage("Quality Gate") {
             steps {
