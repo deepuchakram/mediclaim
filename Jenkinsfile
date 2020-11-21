@@ -43,6 +43,24 @@ stage('Build Approval')
               }
             }
           } */
+stage('Deploy Approval'){
+            steps{
+               slackSend baseUrl: 'https://hooks.slack.com/services/', channel: 'pipeline', color: 'bad', message: "${env.BUILD_URL}", tokenCredentialId: 'slackpipe', username: 'admin'
+               script{
+                   def userInput
+                   try {
+                       userInput = input(
+                           id: 'Proceed1', message: 'Approval',submitterParameter: 'submitter', submitter:'admin', parameters: [
+                               [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please provide Deployment approval']])
+
+                        }
+                    catch(err) {
+                        def user = err.getCauses()[0].getUser()
+                        userInput = false
+                        echo "Aborted by: [${user}]"
+                    }}
+               }
+            }      		    
     stage ('Deploy') {
         steps {
             sh '/opt/maven/bin/mvn clean deploy -Dmaven.test.skip=true'
