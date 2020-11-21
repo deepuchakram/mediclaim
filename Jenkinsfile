@@ -6,14 +6,7 @@ pipeline {
             git 'https://github.com/deepuchakram/mediclaim.git'
         }
     }
-    stage('Build') {
-        steps {
-            withSonarQubeEnv('sonar') {
-                sh '/opt/maven/bin/mvn clean verify sonar:sonar -Dmaven.test.skip=true'
-            }
-        }
-    }
-       stage('Build Approval')
+stage('Build Approval')
         {
         steps{
          slackSend baseUrl: 'https://hooks.slack.com/services/', channel: 'pipeline', color: 'bad', message: "${env.BUILD_URL}", tokenCredentialId: 'slackpipe', username: 'admin'
@@ -33,6 +26,14 @@ pipeline {
 		 
         }
         }
+    stage('Build') {
+        steps {
+            withSonarQubeEnv('sonar') {
+                sh '/opt/maven/bin/mvn clean verify sonar:sonar -Dmaven.test.skip=true'
+            }
+        }
+    }
+       
        
     // seems some issue with quality gates in latest jenkins version so commented out
     /*stage("Quality Gate") {
