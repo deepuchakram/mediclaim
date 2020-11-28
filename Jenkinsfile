@@ -9,7 +9,7 @@ pipeline {
 stage('Build Approval')
         {
         steps{
-          build 'Build_approval'
+          build 'build_approval'
             }
          }      
         
