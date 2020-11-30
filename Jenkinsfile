@@ -22,15 +22,7 @@ stage('Build Approval')
     }
        
        
-    // seems some issue with quality gates in latest jenkins version so commented out
-    /*stage("Quality Gate") {
-            steps {
-              timeout(time: 2, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-              }
-            }
-          } */
-       stage('Deployment Approval')
+          stage('Deployment Approval')
         {
         steps{
           build 'deploy_approval'
