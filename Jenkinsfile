@@ -16,7 +16,7 @@ stage('Build Approval')
     stage('Build') {
         steps {
             withSonarQubeEnv('sonar') {
-                sh '/opt/maven/bin/mvn clean verify sonar:sonar -Dmaven.test.skip=true'
+                sh '/opt/maven/bin/mvn clean verify sonar:sonar -Dmaven.test.skip=false'
             }
         }
     }
@@ -39,7 +39,7 @@ stage('Build Approval')
 
     stage ('Deploy') {
         steps {
-            sh '/opt/maven/bin/mvn clean deploy -Dmaven.test.skip=true'
+            sh '/opt/maven/bin/mvn clean deploy -Dmaven.test.skip=false'
         }
     }
     stage ('Release') {
