@@ -1,7 +1,7 @@
 pipeline {
    agent any
     stages {
-      stage('source code Checkout') {
+      stage('Source Checkout') {
          steps {
             git 'https://github.com/deepuchakram/mediclaim.git'
         }
@@ -30,19 +30,19 @@ stage('Build Approval')
               }
             }
           } */
-       stage('Deploy Approval')
+       stage('Deployment Approval')
         {
         steps{
           build 'deploy_approval'
             }
          }      
 
-    stage ('Deploy') {
+    stage ('Deployment to Nexus') {
         steps {
             sh '/opt/maven/bin/mvn clean deploy -Dmaven.test.skip=false'
         }
     }
-    stage ('Release') {
+    stage ('Deployment in Dev server') {
         steps {
             sh 'export JENKINS_NODE_COOKIE=dontkillme ;nohup java -jar $WORKSPACE/target/*.jar &'
         }
